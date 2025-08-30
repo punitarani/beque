@@ -2,21 +2,21 @@
 
 **Beque** (pronounced "Beck") is a lightweight, high-performance Python library for asynchronous batch processing. It accumulates items in memory and flushes them to an async sink when either:
 
-- `max_batch_size` items are queued, or  
-- `flush_interval` seconds have passed since the last successful flush
+* `max_batch_size` items are queued, or
+* `flush_interval` seconds have passed since the last successful flush
 
 Flushing is serialized and items are never lost: on failure, the batch is re-queued in original order.
 
 ## Features
 
-- **Async/await support**: Built for modern Python asyncio applications
-- **Batch processing**: Efficiently processes items in configurable batches
-- **Time-based flushing**: Automatic flushing based on configurable intervals
-- **Error resilience**: Failed batches are re-queued and retried
-- **Thread-safe**: Safe for concurrent access across async tasks
-- **Generic typing**: Full type safety with Python's generic typing system
-- **Comprehensive stats**: Built-in statistics and monitoring
-- **Zero dependencies**: No external dependencies required
+* **Async/await support**: Built for modern Python asyncio applications
+* **Batch processing**: Efficiently processes items in configurable batches
+* **Time-based flushing**: Automatic flushing based on configurable intervals
+* **Error resilience**: Failed batches are re-queued and retried
+* **Thread-safe**: Safe for concurrent access across async tasks
+* **Generic typing**: Full type safety with Python's generic typing system
+* **Comprehensive stats**: Built-in statistics and monitoring
+* **Zero dependencies**: No external dependencies required
 
 ## Installation
 
@@ -74,25 +74,30 @@ class Beque(Generic[T]):
 
 **Parameters:**
 
-- `on_flush`: Async function that processes batches of items
-- `max_batch_size`: Maximum items in a batch before auto-flush (default: 100)
-- `flush_interval`: Seconds between time-based flushes (default: 10.0)
-- `name`: Name for logging and identification (default: "Beque")
-- `logger`: Custom logger instance (optional)
+* `on_flush`: Async function that processes batches of items
+* `max_batch_size`: Maximum items in a batch before auto-flush (default: 100)
+* `flush_interval`: Seconds between time-based flushes (default: 10.0)
+* `name`: Name for logging and identification (default: "Beque")
+* `logger`: Custom logger instance (optional)
 
 ### Methods
 
 #### `async add(item: T) -> None`
+
 Add a single item to the queue.
 
 #### `async add_many(items: List[T]) -> None`
+
 Add multiple items to the queue atomically.
 
 #### `async flush(*, force: bool = True) -> None`
+
 Manually trigger a flush. If `force=True`, flushes all queued items.
 
 #### `stats -> dict`
+
 Get current statistics:
+
 ```python
 {
     "flushes": int,      # Total successful flushes
@@ -241,17 +246,17 @@ queue: Beque[Dict[str, int]] = Beque(on_flush=process_dicts)
 
 ## Performance Characteristics
 
-- **Memory**: O(n) where n is the number of queued items
-- **Throughput**: Optimized for high-frequency additions with batched processing
-- **Latency**: Configurable via `flush_interval` and `max_batch_size`
-- **Concurrency**: Thread-safe with asyncio locks, supports many concurrent producers
+* **Memory**: O(n) where n is the number of queued items
+* **Throughput**: Optimized for high-frequency additions with batched processing
+* **Latency**: Configurable via `flush_interval` and `max_batch_size`
+* **Concurrency**: Thread-safe with asyncio locks, supports many concurrent producers
 
 ## Error Handling
 
 Beque provides robust error handling:
 
 1. **Flush failures**: Batches are re-queued in original order
-2. **Automatic retry**: Failed batches will be retried on next flush opportunity  
+2. **Automatic retry**: Failed batches will be retried on next flush opportunity
 3. **Graceful shutdown**: Context manager ensures final flush even on exceptions
 4. **Statistics tracking**: Monitor success/failure rates via `stats` property
 
@@ -259,9 +264,9 @@ Beque provides robust error handling:
 
 Beque provides structured logging at various levels:
 
-- **INFO**: Start/stop events with configuration
-- **DEBUG**: Individual flush operations
-- **ERROR**: Flush failures with full context
+* **INFO**: Start/stop events with configuration
+* **DEBUG**: Individual flush operations
+* **ERROR**: Flush failures with full context
 
 ```python
 import logging
@@ -276,17 +281,9 @@ async with Beque(on_flush=handler, logger=logger) as queue:
 
 ## Requirements
 
-- Python 3.8+
-- No external dependencies
+* Python 3.8+
+* No external dependencies
 
 ## License
 
 MIT License - see LICENSE file for details.
-
-## Contributing
-
-Contributions welcome! Please read CONTRIBUTING.md for guidelines.
-
-## Changelog
-
-See CHANGELOG.md for version history and breaking changes.
